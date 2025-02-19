@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Choice Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .question-container {
+            display: none;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .active {
+            display: block;
+        }
+        .feedback {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Multiple Choice Quiz</h1>
+    
+    <div class="container">
+        <label for="topic">Select a Topic:</label>
+        <select id="topic" onchange="loadQuestions()">
+            <option value="">-- Choose a Topic --</option>
+            <option value="defamation">Defamation</option>
+            <option value="wrongful_death">Wrongful Death & Survival</option>
+            <option value="vicarious_liability">Vicarious Liability</option>
+            <option value="damages">Damages</option>
+            <option value="negligence_defenses">Negligence Defenses</option>
+        </select>
+
+        <div id="quiz-container"></div>
+
+        <button id="submit-all" style="display: none;">Submit All</button>
+        <h2 id="score"></h2>
+    </div>
+
+    <script>
+        const questions = {
+            defamation: [
+                { 
+                    question: "If Sam sues Bill for defamation, is the statement sufficiently defamatory to be actionable?",
+                    options: [
+                        "A. Yes. It holds Sam up to ridicule, hatred, and/or loss of reputation.",
+                        "B. Yes. All false statements are defamatory.",
+                        "C. No. Only written statements can be defamatory.",
+                        "D. No. The statement may be a misrepresentation, but it is not defamatory."
+                    ],
+                    correct: 0,
+                    explanation: "Defamation requires harm to a person's reputation."
+                },
+                { 
+                    question: "Defamation in spoken form is called:",
+                    options: [
+                        "A. Libel",
+                        "B. Slander",
+                        "C. False Light",
+                        "D. Misrepresentation"
+                    ],
+                    correct: 1,
+                    explanation: "Spoken defamation is slander, while written defamation is libel."
+                }
+            ],
+            wrongful_death: [
+                {
+                    question: "Who can bring a wrongful death lawsuit?",
+                    options: [
+                        "A. The deceased person’s employer",
+                        "B. The government",
+                        "C. The deceased person’s family or estate",
+                        "D. A neighbor"
+                    ],
+                    correct: 2,
+                    explanation: "Wrongful death claims are usually brought by family or the estate."
+                }
+            ],
+            vicarious_liability: [
+                {
+                    question: "Under the doctrine of respondeat superior, an employer is liable for:",
+                    options: [
+                        "A. Any crime committed by an employee",
+                        "B. An employee’s negligence while performing job duties",
+                        "C. An employee’s acts outside of work",
+                        "D. An independent contractor’s actions"
+                    ],
+                    correct: 1,
+                    explanation: "Employers are liable for employees’ negligent actions within the scope of employment."
+                }
+            ],
+            damages: [
+                {
+                    question: "Which of the following is considered compensatory damages?",
+                    options: [
+                        "A. Punitive damages",
+                        "B. Pain and suffering",
+                        "C. Community service",
+                        "D. Criminal fines"
+                    ],
+                    correct: 1,
+                    explanation: "Compensatory damages include non-economic losses like pain and suffering."
+                }
+            ],
+            negligence_defenses: [
+                {
+                    question: "What is a valid defense to negligence?",
+                    options: [
+                        "A. Assumption of risk",
+                        "B. Strict liability",
+                        "C. Malicious intent",
+                        "D. None of the above"
+                    ],
+                    correct: 0,
+                    explanation: "Assumption of risk is a defense where the plaintiff knowingly accepted a known danger."
+                }
+            ]
+        };
+
+        let correctAnswers = 0;
+        let totalAnswered = 0;
+
+        function loadQuestions() {
+            const selectedTopic = document.getElementById("topic").value;
+            const quizContainer = document.getElementById("quiz-container");
+            quizContainer.innerHTML = "";
+            correctAnswers = 0;
+            totalAnswered = 0;
+
+            if (!selectedTopic) {
+                document.getElementById("submit-all").style.display = "none";
+                return;
+            }
+
+            questions[selectedTopic].forEach((q, index) => {
+                const questionDiv = document.createElement("div");
+                questionDiv.classList.add("question-container", "active");
+
+                questionDiv.innerHTML = `<h3>${q.question}</h3>`;
+
+                q.options.forEach((option, i) => {
+                    const btn = document.createElement("button");
+                    btn.textContent = option;
+                    btn.onclick = () => checkAnswer(i, index, btn, q);
+                    questionDiv.appendChild(btn);
+                });
+
+                const feedback = document.createElement("p");
+                feedback.classList.add("feedback");
+                questionDiv.appendChild(feedback);
+
+                const skipBtn = document.createElement("button");
+                skipBtn.textContent = "Skip";
+                skipBtn.onclick = () => nextQuestion(index);
+                questionDiv.appendChild(skipBtn);
+
+                quizContainer.appendChild(questionDiv);
+            });
+
+            document.getElementById("submit-all").style.display = "block";
+        }
+
+        function checkAnswer(selectedIndex, questionIndex, btn, q) {
+            const feedback = document.getElementById("quiz-container").children[questionIndex].querySelector(".feedback");
+
+            if (selectedIndex === q.correct) {
+                feedback.textContent = "Correct! " + q.explanation;
+                feedback.classList.add("correct");
+                correctAnswers++;
+            } else {
+                feedback.textContent = "Incorrect! " + q.explanation;
+                feedback.classList.add("incorrect");
+            }
+
+            totalAnswered++;
+        }
+
+        document.getElementById("submit-all").onclick = () => {
+            if (totalAnswered === 0) {
+                alert("You must answer at least one question to get a score.");
+                return;
+            }
+
+            const score = ((correctAnswers / totalAnswered) * 100).toFixed(2);
+            document.getElementById("score").textContent = `Final Score: ${score}%`;
+        };
+    </script>
+
+</body>
+</html>
