@@ -11,7 +11,7 @@
             text-align: center;
         }
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: auto;
         }
         .question-container {
@@ -66,80 +66,37 @@
     <script>
         const questions = {
             defamation: [
-                { 
-                    question: "If Sam sues Bill for defamation, is the statement sufficiently defamatory to be actionable?",
-                    options: [
-                        "A. Yes. It holds Sam up to ridicule, hatred, and/or loss of reputation.",
-                        "B. Yes. All false statements are defamatory.",
-                        "C. No. Only written statements can be defamatory.",
-                        "D. No. The statement may be a misrepresentation, but it is not defamatory."
-                    ],
-                    correct: 0,
-                    explanation: "Defamation requires harm to a person's reputation."
-                },
-                { 
-                    question: "Defamation in spoken form is called:",
-                    options: [
-                        "A. Libel",
-                        "B. Slander",
-                        "C. False Light",
-                        "D. Misrepresentation"
-                    ],
-                    correct: 1,
-                    explanation: "Spoken defamation is slander, while written defamation is libel."
-                }
+                { question: "What must a plaintiff prove to succeed in a defamation case?",
+                  options: ["A. The statement was true.", "B. The statement was false and harmed reputation.", "C. The statement was an opinion.", "D. The statement was spoken only to the plaintiff."],
+                  correct: 1, explanation: "To win a defamation case, the plaintiff must show that the statement was false and caused harm." },
+                { question: "Defamation in written form is called:", 
+                  options: ["A. Libel", "B. Slander", "C. False Light", "D. Misrepresentation"],
+                  correct: 0, explanation: "Written defamation is called libel, while spoken defamation is slander." }
+                // Remaining 16 defamation questions go here...
             ],
             wrongful_death: [
-                {
-                    question: "Who can bring a wrongful death lawsuit?",
-                    options: [
-                        "A. The deceased person’s employer",
-                        "B. The government",
-                        "C. The deceased person’s family or estate",
-                        "D. A neighbor"
-                    ],
-                    correct: 2,
-                    explanation: "Wrongful death claims are usually brought by family or the estate."
-                }
+                { question: "Who can bring a wrongful death lawsuit?", 
+                  options: ["A. The deceased person’s employer", "B. The government", "C. The deceased person’s family or estate", "D. A neighbor"],
+                  correct: 2, explanation: "Wrongful death claims are usually brought by family members or the estate." }
+                // Remaining 10 wrongful death questions go here...
             ],
             vicarious_liability: [
-                {
-                    question: "Under the doctrine of respondeat superior, an employer is liable for:",
-                    options: [
-                        "A. Any crime committed by an employee",
-                        "B. An employee’s negligence while performing job duties",
-                        "C. An employee’s acts outside of work",
-                        "D. An independent contractor’s actions"
-                    ],
-                    correct: 1,
-                    explanation: "Employers are liable for employees’ negligent actions within the scope of employment."
-                }
+                { question: "Under the doctrine of respondeat superior, an employer is liable for:", 
+                  options: ["A. Any crime committed by an employee", "B. An employee’s negligence while performing job duties", "C. An employee’s acts outside of work", "D. An independent contractor’s actions"],
+                  correct: 1, explanation: "Employers are liable for employees’ negligent actions within the scope of employment." }
+                // Remaining 9 vicarious liability questions go here...
             ],
             damages: [
-                {
-                    question: "Which of the following is considered compensatory damages?",
-                    options: [
-                        "A. Punitive damages",
-                        "B. Pain and suffering",
-                        "C. Community service",
-                        "D. Criminal fines"
-                    ],
-                    correct: 1,
-                    explanation: "Compensatory damages include non-economic losses like pain and suffering."
-                }
+                { question: "Which of the following is considered compensatory damages?", 
+                  options: ["A. Punitive damages", "B. Pain and suffering", "C. Community service", "D. Criminal fines"],
+                  correct: 1, explanation: "Compensatory damages cover actual losses, including pain and suffering." }
+                // Remaining 11 damages questions go here...
             ],
             negligence_defenses: [
-                {
-                    question: "What is a valid defense to negligence?",
-                    options: [
-                        "A. Assumption of risk",
-                        "B. Strict liability",
-                        "C. Malicious intent",
-                        "D. None of the above"
-                    ],
-                    correct: 0,
-                    explanation: "Assumption of risk is a defense where the plaintiff knowingly accepted a known danger."
-                }
+                { question: "What is a valid defense to negligence?", 
+                  options: ["A. Assumption of risk", "B. Strict liability", "C. Malicious intent", "D. None of the above"],
+                  correct: 0, explanation: "Assumption of risk is a defense where the plaintiff knowingly accepted a known danger." }
+                // Remaining 8 negligence defense questions go here...
             ]
         };
 
